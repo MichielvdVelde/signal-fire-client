@@ -1,0 +1,14 @@
+{
+  "name": "signal-fire-client",
+  "description": "Client for signal-fire, a WebRTC signaling server for node.js",
+  "main": "lib/client.js",
+  "authors": [
+    "Michiel van der velde <michiel@michielvdvelde.nl>"
+  ],
+  "keywords": [
+    "signal-fire",
+    "webrtc",
+    "datachannel"
+  ],
+  "license": "MIT"
+}

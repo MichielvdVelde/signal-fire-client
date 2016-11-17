@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>signal-fire-client example</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Hello, WebRTC!</h1>
+
+    <p class="lead">One-on-one videocalls</p>
+    <p>Before running the example, make sure you have a <strong><a href="https://github.com/MichielvdVelde/signal-fire">signal-fire</a></strong> server running on localhost:8080!</p>
+
+    <video id="vidLocalVideo" autoplay muted style="width:40%;"></video>
+    <video id="vidRemoteVideo" autoplay style="width:40%;"></video>
+
+    <p><strong>My peer ID is:</strong> <span id="spnMyPeerId">unknown</span></p>
+    <p><strong>Your peer ID is:</strong> <iput type="text" id="inpYourPeerId" /></p>
+    <p><input type="button" onclick="createConnection()" value="Connect" /></p>
+
+    <!-- Include the WebRTC adapter -->
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <!-- Include EventEmitter2 -->
+    <script src="js/eventemitter2.js"></script>
+    <!-- Include the client -->
+    <script src="../lib/client.js"></script>
+    <!-- Our local client code -->
+    <script>
+      const myPeerId = document.querySelector('span#spnMyPeerId')
+      const yourPeerId = document.querySelector('input#inpYourPeerId')
+      const localVideo = document.querySelector('video#vidLocalVideo')
+      const remoteVideo = document.querySelector('video#vidRemoteVideo')
+
+      // Constraints to be used with `getUserMedia()`
+      const mediaConstraints = {
+        video: true,
+        audio: true
+      }
+
+      const client = new SignalFireClient('ws://localhost:8080')
+
+      // This event is triggered when a new peer connection comes in
+      client.on('incoming', (peerConnection) => {
+        // `peerConnection` is an instance of `SignalFirePeerConnection`
+
+        // Use `getUserMedia` to collect the local stream
+        navigator.mediaDevices.getUserMedia(mediaConstraints).then((stream) => {
+          // Display the local stream in a <video> element
+          localVideo.srcObject = stream
+          // And add it to the peer connection
+          peerConnection.addStream(stream)
+        })
+
+        // This event is triggered when there is an incoming stream
+        peerConnection.on('stream', (stream) => {
+          // Do with it what you want, like displaying it in a <video> element
+          remoteVideo.srcObject = stream
+        })
+      })
+
+      // Starts a peer connection with the peer with ID `yourPeerId`
+      const createConnection = () => {
+        if (yourPeerId.value === '') return console.error('remote peer id can not be empty')
+
+        client.createPeerConnection(yourPeerId.value).then((peerConnection) => {
+          // Use `getUserMedia` to collect the local stream
+          navigator.mediaDevices.getUserMedia(mediaConstraints).then((stream) => {
+            // Display the local stream in a <video> element
+            localVideo.srcObject = stream
+            // Add the stream to the peer connection
+            peerConnection.addStream(stream)
+          })
+
+          // This event is triggered when there is an incoming stream
+          peerConnection.on('stream', (stream) => {
+            remoteVideo.srcObject = stream
+          })
+        })
+      }
+
+      // Connect to the server
+      client.connect().then((peerId) => {
+        myPeerId.innerHTML = peerId
+      })
+    </script>
+  </body>
+</html>
