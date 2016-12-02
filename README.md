@@ -141,6 +141,8 @@ client.createPeerConnection(remotePeerId).then((peerConnection) => {
 
 ### Changelog
 
+* v0.2.0
+  * Several bugfixes
 * v0.1.0
   * Initial release
 
