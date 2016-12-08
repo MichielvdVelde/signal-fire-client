@@ -45,7 +45,8 @@ You can install the client using **bower**:
 bower install signal-fire-client
 ```
 
-You can also manually include [client.js](./lib/client.js)
+You can also manually include [client.js](./lib/client.js). There is also a
+[minified version](./lib/client.min.js) available.
 
 ### Usage
 
