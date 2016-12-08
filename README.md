@@ -142,6 +142,8 @@ client.createPeerConnection(remotePeerId).then((peerConnection) => {
 
 ### Changelog
 
+* v0.2.1
+  * Made minified version available as [client.min.js](./lib/client.min.js)
 * v0.2.0
   * Several bugfixes
 * v0.1.0
