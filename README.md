@@ -4,7 +4,7 @@
 
 ## Deprecated
 
-signal-fire-client has been **deprecated** in facor of **[Signal-Fire Server](https://github.com/Signal-Fire/server)**.
+signal-fire-client has been **deprecated** in facor of **[Signal-Fire Client](https://github.com/Signal-Fire/client)**.
 
 The browser client for **[signal-fire](https://github.com/MichielvdVelde/signal-fire)**, a WebRTC signaling server for node.js.
 Make adding peer-to-peer to your sites as easy as it can be, supporting **audio/video**
