@@ -1,8 +1,10 @@
 # signal-fire WebRTC JavaScript Client
 
-**Deprecated** A new version is in the works, just be patient a little while longer!
-
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+
+## Deprecated
+
+signal-fire-client has been **deprecated** in facor of **[Signal-Fire Server](https://github.com/Signal-Fire/server)**.
 
 The browser client for **[signal-fire](https://github.com/MichielvdVelde/signal-fire)**, a WebRTC signaling server for node.js.
 Make adding peer-to-peer to your sites as easy as it can be, supporting **audio/video**
